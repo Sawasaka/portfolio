@@ -166,8 +166,27 @@
         }
         h1 span { font-style: italic; color: var(--accent-color); }
 
+        .company {
+            margin-top: 1.5rem;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.85rem;
+            letter-spacing: 0.1em;
+            color: var(--text-main);
+        }
+
+        .pricing {
+            margin-top: 2rem;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.8rem;
+            letter-spacing: 0.15em;
+            color: var(--accent-color);
+            border: 1px solid var(--accent-color);
+            padding: 0.6rem 1.2rem;
+            display: inline-block;
+        }
+
         .bio {
-            margin-top: 3rem;
+            margin-top: 1.5rem;
             max-width: 500px;
             color: var(--text-sub);
             font-size: 1rem;
@@ -523,11 +542,15 @@
                     <h1 id="user-name" class="reveal-text"></h1>
                 </div>
                 
+                <p class="company">沢坂弘樹 | 株式会社ルーキースマートジャパン 代表取締役</p>
+                
                 <p id="user-bio" class="bio"></p>
+                
+                <p class="pricing">費用　月額固定 | 伴走型</p>
             </div>
 
             <div class="profile-image-wrapper">
-                <img src="/image/profile.jpg" alt="Profile" class="profile-image">
+                <img src="/image/img.png" alt="Profile" class="profile-image">
             </div>
 
             <div class="scroll-down">
@@ -584,12 +607,12 @@
         const config = {
             name: "HIROKI<br><span>SAWASAKA</span>",
             role: "事業開発 / ビジネスデベロッパー",
-            bio: "事業設計 × プロダクト開発 × ビジネス運用をワンストップで。<br>株式会社ルーキースマートジャパン 代表取締役。<br>元プロ野球選手。脊髄骨折からの完全復帰を経て、挑戦を続ける。",
+            bio: "事業設計 × プロダクト開発 × ビジネス運用をワンストップで。<br>元プロ野球選手。脊髄骨折から完全復帰し、異端な挑戦を続ける。",
             
             textContent: {
                 title: "スキル・専門領域",
                 body: `
-                    <p><strong>マーケティング</strong><br>SEO設計・対策・分析 / 広告運用 / オウンドメディア開発・運用</p>
+                    <p><strong>マーケティング</strong><br>オウンドメディア開発 / SEO設計 / 広告運用 / マーケ戦略構築</p>
                     <p><strong>事業開発</strong><br>事業設計 / プロダクト・サービス開発 / プロジェクト推進</p>
                     <p><strong>セールス設計</strong><br>リード獲得の動線設計 / 営業組織構築（IS/FS） / CS設計（オンボ/継続/アップセル）</p>
                     <p><strong>プロダクトマネジメント</strong><br>市場調査・ユーザー課題の特定 / 戦略・ロードマップ策定 / 機能アップデート・改善</p>
@@ -599,12 +622,12 @@
 
             works: [
                 { id: 1, title: "外資SaaS日本法人立ち上げ", category: "Executive", desc: "正社員として参画し、ゼロからの市場開拓を推進。ARR500万円を達成し、日本市場での事業基盤を構築。" },
-                { id: 2, title: "スタートアップ創業", category: "CRO", desc: "共同創業者・CROとして事業立ち上げ。月間50名超の登録者を獲得し、登録制限をかけるまで成長させた。" },
-                { id: 3, title: "中学野球クラブ事業再生", category: "Business Turnaround", desc: "統括責任者として経営改善に着手。組織再編と集客強化により、年商1,000万円超を実現。" },
-                { id: 4, title: "オウンドメディア立ち上げ", category: "Media / Development", desc: "SEO設計から開発・運用までワンストップで対応。集客基盤としてのメディア構築を実現。" },
-                { id: 5, title: "新規事業開発", category: "PdM", desc: "受託開発企業にてPdMとして参画。要件定義から仕様設計まで、プロダクト開発を主導。" },
-                { id: 6, title: "自社オウンドメディア", category: "Own Product", desc: "自社メディアの企画・設計・開発・運用をすべて一人で担当。SEOを軸にした集客基盤を構築。" },
-                { id: 7, title: "DXソフトウェア開発", category: "Own Product", desc: "業務効率化を実現するDXソフトウェアを自社開発。企画からリリースまで一貫して推進中。" },
+                { id: 2, title: "スタートアップ創業", category: "Chief Revenue Officer（CRO）", desc: "共同創業者・CROとして事業立ち上げ。月間50名超の登録者を獲得し、登録制限をかけるまで成長させた。" },
+                { id: 3, title: "中学野球クラブ事業再生", category: "統括責任者", desc: "統括責任者として経営改善に着手。組織再編と集客強化により、年商1,000万円超を実現。" },
+                { id: 4, title: "人材オウンドメディア立ち上げ", category: "開発 / マーケティング", desc: "SEO設計から開発・運用までワンストップで対応。集客基盤としてのメディア構築を実現。" },
+                { id: 5, title: "受託開発", category: "プロダクトマネジメント / PdM", desc: "受託開発企業にて新規事業の推進役として参画。要件定義から仕様設計まで、プロダクト開発を主導。" },
+                { id: 6, title: "オウンドメディア運営", category: "自社サービス", desc: "自社メディアの企画・設計・開発・運用をすべて一人で担当。SEOを軸にした集客基盤を構築。" },
+                { id: 7, title: "DXソフトウェア開発", category: "自社プロダクト", desc: "業務効率化を実現するDXソフトウェアを自社開発。企画からリリースまで一貫して推進中。" },
             ],
             
             links: [
