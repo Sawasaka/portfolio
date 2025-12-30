@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<!--
+  Template: NOIR v1.0
+  Author: Haruki Tominaga
+  License: https://amix-design.com/tominaga/eyan-theme/license 
+  © 2025 EYAN / トミナガハルキ
+-->
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    
+    <title>Portfolio - NOIR</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;1,400&family=Montserrat:wght@200;400&family=Noto+Serif+JP:wght@300;500&display=swap" rel="stylesheet">
+    
+    <style>
+        /* =========================================
+           カスタマイズ設定（色・基本設定）
+           ========================================= */
+        :root {
+            --bg-color: #050505;
+            --text-main: #f0f0f0;
+            --text-sub: #888;
+            --accent-color: #d4af37;
+            --border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* =========================================
+           基本スタイル
+           ========================================= */
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Cormorant Garamond', 'Noto Serif JP', serif;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            line-height: 1.8;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a { text-decoration: none; color: inherit; transition: 0.5s; }
+        ul { list-style: none; padding: 0; margin: 0; }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 4vw;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* 装飾ライン */
+        .vertical-line {
+            position: fixed;
+            top: 0; bottom: 0; width: 1px;
+            background: rgba(255, 255, 255, 0.03);
+            z-index: 0;
+            height: 0;
+            transition: height 1.5s ease-in-out;
+        }
+        .vertical-line.active { height: 100%; }
+        .line-left { left: 10vw; }
+        .line-right { right: 10vw; }
+
+        /* =========================================
+           ヘッダーエリア
+           ========================================= */
+        header {
+            height: 100vh;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 6vw;
+            position: relative;
+        }
+
+        .header-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            flex: 1;
+        }
+
+        .profile-image-wrapper {
+            flex: 0 0 auto;
+            margin-left: 4vw;
+        }
+
+        .profile-image {
+            width: 280px;
+            height: 350px;
+            object-fit: cover;
+            object-position: center top;
+            filter: grayscale(20%) brightness(0.95);
+            transition: filter 0.5s ease;
+            border: 1px solid var(--border-color);
+        }
+        .profile-image:hover {
+            filter: grayscale(0%) brightness(1);
+        }
+
+        .header-bg-text {
+            position: absolute;
+            right: 0; top: 20%;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 15vw;
+            font-weight: 900;
+            opacity: 0.03;
+            line-height: 0.8;
+            z-index: -1;
+            pointer-events: none;
+            writing-mode: vertical-rl;
+        }
+
+        .reveal-text {
+            transform: translateY(0);
+            opacity: 1;
+            transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1), opacity 1s ease;
+        }
+        .reveal-text.active {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .role-wrapper, .name-wrapper { overflow: hidden; margin-bottom: 1rem; }
+        
+        .role {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--accent-color);
+            display: block;
+        }
+
+        h1 {
+            font-size: 5rem;
+            font-weight: 300;
+            margin: 0;
+            line-height: 1.1;
+            letter-spacing: 0.05em;
+        }
+        h1 span { font-style: italic; color: var(--accent-color); }
+
+        .bio {
+            margin-top: 3rem;
+            max-width: 500px;
+            color: var(--text-sub);
+            font-size: 1rem;
+            font-weight: 300;
+            opacity: 1;
+            transition: opacity 1.5s ease 1s;
+        }
+        .bio.active { opacity: 1; }
+
+        .scroll-down {
+            position: absolute;
+            bottom: 3rem; left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            opacity: 0.5;
+        }
+        .scroll-text {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.7rem;
+            letter-spacing: 0.2em;
+            margin-bottom: 1rem;
+        }
+        .scroll-line {
+            width: 1px; height: 60px;
+            background: var(--accent-color);
+        }
+
+        /* =========================================
+           テキストセクション
+           ========================================= */
+        .text-section {
+            padding: 10rem 0 5rem;
+            display: flex;
+            justify-content: center;
+        }
+
+        .text-inner {
+            max-width: 700px;
+            width: 100%;
+            text-align: left;
+        }
+
+        .text-section-title {
+            font-size: 2.5rem;
+            font-weight: 300;
+            margin-bottom: 3rem;
+            display: inline-block;
+            border-bottom: 1px solid var(--accent-color);
+            padding-bottom: 0.5rem;
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+
+        .text-body {
+            font-size: 1.05rem;
+            color: #ccc;
+            line-height: 2.2;
+            letter-spacing: 0.05em;
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 1s ease 0.2s, transform 1s ease 0.2s;
+        }
+        
+        .is-visible .text-section-title,
+        .is-visible .text-body {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* =========================================
+           ギャラリーエリア
+           ========================================= */
+        .gallery-section { padding: 8rem 0; }
+
+        .section-header {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            margin-bottom: 5rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 1rem;
+        }
+        .section-title { font-size: 3rem; font-weight: 300; margin: 0; }
+        .section-num {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--accent-color);
+            font-size: 1.2rem;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 6rem;
+        }
+
+        .work-item {
+            cursor: pointer;
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 1s ease, transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .work-item.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .work-item:nth-child(even) { margin-top: 8rem; }
+
+        .img-mask {
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .work-img {
+            width: 100%;
+            aspect-ratio: 3/4;
+            object-fit: cover;
+            filter: grayscale(100%) brightness(0.8);
+            transition: transform 1.5s cubic-bezier(0.19, 1, 0.22, 1), filter 0.5s ease;
+            transform: scale(1.1);
+        }
+        .work-item:hover .work-img {
+            filter: grayscale(0%) brightness(1);
+            transform: scale(1);
+        }
+
+        .work-info {
+            padding-top: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            border-bottom: 1px solid transparent;
+            transition: 0.3s;
+        }
+        .work-item:hover .work-info { border-bottom-color: var(--accent-color); }
+
+        .work-title { font-size: 1.5rem; font-weight: 400; margin: 0; }
+        .work-cat {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.8rem;
+            color: var(--accent-color);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        /* =========================================
+           フッターエリア
+           ========================================= */
+        footer {
+            margin-top: 15rem;
+            padding: 5rem 0;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+        .footer-logo { font-size: 1rem; font-weight: 400; letter-spacing: 0.15em; }
+        .social-links { display: flex; gap: 3rem; }
+        .social-links a {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            letter-spacing: 0.1em;
+            position: relative;
+        }
+        .social-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px; left: 0; width: 0%; height: 1px;
+            background: var(--accent-color);
+            transition: 0.4s;
+        }
+        .social-links a:hover { color: var(--accent-color); }
+        .social-links a:hover::after { width: 100%; }
+
+        /* =========================================
+           モーダルエリア
+           ========================================= */
+        .modal {
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(5, 5, 5, 0.95);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.6s ease;
+            overflow-y: auto;
+            padding: 20px;
+        }
+        .modal.active { opacity: 1; visibility: visible; }
+
+        .modal-inner {
+            width: 100%;
+            max-width: 1400px;
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            margin: auto;
+        }
+
+        .modal-img-wrap {
+            /* 修正: PC表示時に高さが画面を超えないように設定 */
+            width: auto;
+            max-width: 100%;
+            height: auto;
+            max-height: calc(100vh - 40px); /* 上下のパディング(20px+20px)を考慮 */
+            aspect-ratio: 3/4;
+            margin: 0 auto; /* 幅が狭くなった場合に中央寄せ */
+            
+            overflow: hidden;
+            position: relative;
+            clip-path: inset(0 100% 0 0);
+            transition: clip-path 1s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+        .modal.active .modal-img-wrap { clip-path: inset(0 0 0 0); }
+
+        .modal-img {
+            width: 100%; height: 100%; object-fit: cover;
+            /* 【変更】画像クリックできることを示すカーソル */
+            cursor: pointer;
+        }
+
+        .modal-text {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: 0.8s ease 0.4s;
+        }
+        .modal.active .modal-text {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .modal-h2 {
+            font-size: 3.5rem;
+            font-weight: 300;
+            margin: 0 0 1rem;
+            line-height: 1;
+        }
+        .modal-cat {
+            color: var(--accent-color);
+            font-family: 'Montserrat', sans-serif;
+            letter-spacing: 0.2em;
+            display: block;
+            margin-bottom: 3rem;
+        }
+
+        .close-btn {
+            background: transparent;
+            border: 1px solid var(--text-main);
+            color: var(--text-main);
+            padding: 1rem 3rem;
+            font-family: 'Montserrat';
+            letter-spacing: 0.2em;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 3rem;
+        }
+        .close-btn:hover {
+            background: var(--accent-color);
+            border-color: var(--accent-color);
+            color: #000;
+        }
+
+        /* =========================================
+           スマートフォン・タブレット対応
+           ========================================= */
+        @media (max-width: 768px) {
+            h1 { font-size: 3rem; }
+            .header-bg-text { display: none; }
+            
+            .gallery-grid { grid-template-columns: 1fr; gap: 4rem; }
+            .work-item:nth-child(even) { margin-top: 0; }
+            
+            .line-left, .line-right { display: none; }
+            header { 
+                flex-direction: column;
+                padding: 6rem 4vw 2rem;
+                height: auto;
+                min-height: 100vh;
+            }
+            .header-content {
+                align-items: center;
+                text-align: center;
+                order: 2;
+            }
+            .profile-image-wrapper {
+                margin-left: 0;
+                margin-bottom: 2rem;
+                order: 1;
+            }
+            .profile-image {
+                width: 180px;
+                height: 225px;
+            }
+            
+            .text-section { padding: 6rem 0 3rem; }
+            .text-inner { padding: 0 1rem; }
+            .text-section-title { font-size: 2rem; margin-bottom: 2rem; }
+            .text-body { font-size: 1rem; line-height: 2; }
+
+            .modal { align-items: flex-start; }
+            .modal-inner { 
+                grid-template-columns: 1fr; 
+                gap: 2rem; 
+                padding: 2rem 0;
+            }
+            .modal-img-wrap { 
+                height: auto; 
+                max-height: 50vh;
+            }
+            .modal-h2 { font-size: 2rem; }
+            .modal-text { padding-bottom: 2rem; }
+
+            footer {
+                flex-direction: column;
+                align-items: center;
+                gap: 3rem;
+                margin-top: 8rem;
+                padding-bottom: 3rem;
+                text-align: center;
+            }
+            .social-links {
+                gap: 2rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .footer-logo { margin-bottom: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="vertical-line line-left"></div>
+    <div class="vertical-line line-right"></div>
+
+    <div class="container">
+        <header>
+            <div class="header-bg-text">PORTFOLIO</div>
+            
+            <div class="header-content">
+                <div class="role-wrapper">
+                    <span id="user-role" class="role reveal-text"></span>
+                </div>
+                
+                <div class="name-wrapper">
+                    <h1 id="user-name" class="reveal-text"></h1>
+                </div>
+                
+                <p id="user-bio" class="bio"></p>
+            </div>
+
+            <div class="profile-image-wrapper">
+                <img src="/image/profile.jpg" alt="Profile" class="profile-image">
+            </div>
+
+            <div class="scroll-down">
+                <span class="scroll-text">SCROLL</span>
+                <span class="scroll-line"></span>
+            </div>
+        </header>
+
+        <section id="text-section" class="text-section">
+            <div class="text-inner">
+                <h2 id="text-title" class="text-section-title"></h2>
+                <div id="text-body" class="text-body"></div>
+            </div>
+        </section>
+
+        <section class="gallery-section">
+            <div class="section-header">
+                <h2 class="section-title">Selected Works</h2>
+                <span id="items-counter" class="section-num"></span>
+            </div>
+
+            <div id="gallery-grid" class="gallery-grid">
+                </div>
+        </section>
+
+        <footer>
+            <div class="footer-logo">ROOKIE SMART JAPAN</div>
+            <ul id="links-list" class="social-links">
+                </ul>
+            <p style="font-size: 0.8rem; color: #666; margin-top: 1rem;">
+                &copy; <span id="footer-name"></span>
+            </p>
+        </footer>
+    </div>
+
+    <div id="modal" class="modal">
+        <div class="modal-inner">
+            <div class="modal-img-wrap">
+                <img id="modal-img" class="modal-img" src="" alt="Work Detail" onclick="closeModal()">
+            </div>
+            <div class="modal-text">
+                <span id="modal-cat" class="modal-cat">CATEGORY</span>
+                <h2 id="modal-title" class="modal-h2">Title</h2>
+                <p id="modal-desc" style="line-height: 2; color: #aaa;"></p>
+                <button class="close-btn" onclick="closeModal()">CLOSE</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /* =========================================================
+           【設定エリア】以下の内容を自身の情報に書き換えてください
+           ======================================================== */
+        const config = {
+            name: "HIROKI<br><span>SAWASAKA</span>",
+            role: "事業開発 / ビジネスデベロッパー",
+            bio: "事業設計 × プロダクト開発 × ビジネス運用をワンストップで。<br>株式会社ルーキースマートジャパン 代表取締役。<br>元プロ野球選手。脊髄骨折からの完全復帰を経て、挑戦を続ける。",
+            
+            textContent: {
+                title: "スキル・専門領域",
+                body: `
+                    <p><strong>マーケティング</strong><br>SEO設計・対策・分析 / 広告運用 / オウンドメディア開発・運用</p>
+                    <p><strong>事業開発</strong><br>事業設計 / プロダクト・サービス開発 / プロジェクト推進</p>
+                    <p><strong>セールス設計</strong><br>リード獲得の動線設計 / 営業組織構築（IS/FS） / CS設計（オンボ/継続/アップセル）</p>
+                    <p><strong>プロダクトマネジメント</strong><br>市場調査・ユーザー課題の特定 / 戦略・ロードマップ策定 / 機能アップデート・改善</p>
+                    <p><strong>Web開発</strong><br>フルスクラッチ開発 / API・Webhook連携 / 認証・権限・DB設計 / Git運用 / デプロイ</p>
+                `
+            },
+
+            works: [
+                { id: 1, title: "外資SaaS日本法人立ち上げ", category: "Executive", desc: "正社員として参画し、ゼロからの市場開拓を推進。ARR500万円を達成し、日本市場での事業基盤を構築。" },
+                { id: 2, title: "スタートアップ創業", category: "CRO", desc: "共同創業者・CROとして事業立ち上げ。月間50名超の登録者を獲得し、登録制限をかけるまで成長させた。" },
+                { id: 3, title: "中学野球クラブ事業再生", category: "Business Turnaround", desc: "統括責任者として経営改善に着手。組織再編と集客強化により、年商1,000万円超を実現。" },
+                { id: 4, title: "オウンドメディア立ち上げ", category: "Media / Development", desc: "SEO設計から開発・運用までワンストップで対応。集客基盤としてのメディア構築を実現。" },
+                { id: 5, title: "新規事業開発", category: "PdM", desc: "受託開発企業にてPdMとして参画。要件定義から仕様設計まで、プロダクト開発を主導。" },
+                { id: 6, title: "自社オウンドメディア", category: "Own Product", desc: "自社メディアの企画・設計・開発・運用をすべて一人で担当。SEOを軸にした集客基盤を構築。" },
+                { id: 7, title: "DXソフトウェア開発", category: "Own Product", desc: "業務効率化を実現するDXソフトウェアを自社開発。企画からリリースまで一貫して推進中。" },
+            ],
+            
+            links: [
+                { label: "Contact", url: "mailto:h.sawasaka@rookiesmart.jp" }
+            ]
+        };
+
+        /* =========================================================
+           以下 プログラム制御
+           ========================================================= */
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            // 基本情報の反映
+            document.getElementById('user-name').innerHTML = config.name;
+            document.getElementById('user-role').textContent = config.role;
+            document.getElementById('user-bio').innerHTML = config.bio;
+
+            if (config.textContent && config.textContent.title) {
+                document.getElementById('text-title').textContent = config.textContent.title;
+                document.getElementById('text-body').innerHTML = config.textContent.body;
+            } else {
+                document.getElementById('text-section').style.display = 'none';
+            }
+            
+            const tempDiv = document.createElement("div");
+            tempDiv.innerHTML = config.name;
+            document.getElementById('footer-name').textContent = tempDiv.textContent.replace(/\n/g, ' ');
+
+            // IntersectionObserver（スクロール監視）
+            const observerOptions = {
+                root: null,
+                rootMargin: "0px",
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            // 追加セクションの監視登録
+            const textSec = document.getElementById('text-section');
+            if (textSec) observer.observe(textSec);
+
+            /* =========================================================
+           ギャラリー生成処理
+           ========================================================= */
+            const grid = document.getElementById('gallery-grid');
+
+            // カウンター更新
+            document.getElementById('items-counter').textContent = 
+                `01 / ${String(config.works.length).padStart(2, '0')}`;
+
+            // 要素生成と追加
+            config.works.forEach(work => {
+                const imgPath = `/image/image${work.id}.jpg`;
+
+                const div = document.createElement('div');
+                div.className = 'work-item';
+                
+                div.innerHTML = `
+                    <div class="img-mask">
+                        <img src="${imgPath}" class="work-img" loading="lazy" alt="${work.title}">
+                    </div>
+                    <div class="work-info">
+                        <h3 class="work-title">${work.title}</h3>
+                        <span class="work-cat">${work.category}</span>
+                    </div>
+                `;
+                div.onclick = () => openModal(work, imgPath);
+                grid.appendChild(div);
+
+                observer.observe(div);
+            });
+
+            // リンク生成
+            const linkList = document.getElementById('links-list');
+            config.links.forEach(link => {
+                linkList.innerHTML += `<li><a href="${link.url}" target="_blank" rel="noopener noreferrer">${link.label}</a></li>`;
+            });
+
+            // オープニングアニメーション
+            setTimeout(() => {
+                document.querySelectorAll('.vertical-line').forEach(el => el.classList.add('active'));
+                document.querySelectorAll('.reveal-text').forEach(el => el.classList.add('active'));
+                document.querySelector('.bio').classList.add('active');
+            }, 100);
+        });
+
+        // モーダル制御
+        const modal = document.getElementById('modal');
+        const body = document.body;
+
+        function openModal(work, imgPath) {
+            document.getElementById('modal-img').src = imgPath;
+            document.getElementById('modal-img').onerror = function() {
+                this.style.display = 'none';
+                this.parentElement.style.backgroundColor = '#222';
+            };
+            document.getElementById('modal-title').textContent = work.title;
+            document.getElementById('modal-cat').textContent = work.category;
+            document.getElementById('modal-desc').textContent = work.desc;
+            
+            modal.classList.add('active');
+            body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            modal.classList.remove('active');
+            body.style.overflow = '';
+            setTimeout(() => {
+                const img = document.getElementById('modal-img');
+                img.onerror = null;
+                img.src = '';
+                img.style.display = 'block';
+                img.parentElement.style.backgroundColor = '';
+            }, 600);
+        }
+
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeModal();
+        });
+    </script>
+</body>
+</html>
