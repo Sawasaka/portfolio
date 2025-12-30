@@ -345,25 +345,36 @@
             border-top: 1px solid var(--border-color);
             display: flex;
             justify-content: space-between;
-            align-items: flex-start;
+            align-items: center;
         }
+        .footer-copyright {
+            font-size: 0.8rem;
+            color: #666;
+        }
+        .footer-brand { display: flex; flex-direction: column; }
         .footer-logo { font-size: 1rem; font-weight: 400; letter-spacing: 0.15em; }
+        .footer-tagline { 
+            font-size: 0.8rem; 
+            color: var(--accent-color); 
+            margin-top: 0.5rem; 
+            letter-spacing: 0.05em;
+            font-style: italic;
+        }
         .social-links { display: flex; gap: 3rem; }
         .social-links a {
             font-family: 'Montserrat', sans-serif;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             letter-spacing: 0.1em;
-            position: relative;
+            padding: 0.8rem 2rem;
+            border: 1px solid var(--text-main);
+            color: var(--text-main);
+            transition: all 0.3s ease;
+            cursor: pointer;
         }
-        .social-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px; left: 0; width: 0%; height: 1px;
-            background: var(--accent-color);
-            transition: 0.4s;
+        .social-links a:hover { 
+            background: var(--text-main); 
+            color: #000;
         }
-        .social-links a:hover { color: var(--accent-color); }
-        .social-links a:hover::after { width: 100%; }
 
         /* =========================================
            モーダルエリア
@@ -577,12 +588,12 @@
         </section>
 
         <footer>
-            <div class="footer-logo">ROOKIE SMART JAPAN</div>
-            <ul id="links-list" class="social-links">
-                </ul>
-            <p style="font-size: 0.8rem; color: #666; margin-top: 1rem;">
-                &copy; <span id="footer-name"></span>
-            </p>
+            <div class="footer-brand">
+                <div class="footer-logo">ROOKIE SMART JAPAN</div>
+                <p class="footer-tagline">異端は、価値になる。</p>
+            </div>
+            <ul id="links-list" class="social-links"></ul>
+            <p class="footer-copyright">&copy; <span id="footer-name"></span></p>
         </footer>
     </div>
 
@@ -606,8 +617,8 @@
            ======================================================== */
         const config = {
             name: "HIROKI<br><span>SAWASAKA</span>",
-            role: "事業開発 / ビジネスデベロッパー",
-            bio: "事業設計 × プロダクト開発 × ビジネス運用をワンストップで。<br>元プロ野球選手。脊髄骨折から完全復帰し、異端な挑戦を続ける。",
+            role: "0→1実績あり / ビジネスデベロッパー",
+            bio: "事業設計 × プロダクト開発 × ビジネス運用をワンストップで。<br>元プロ野球選手。脊髄骨折から完全復帰した、異端なスキル保有者。",
             
             textContent: {
                 title: "スキル・専門領域",
@@ -631,7 +642,7 @@
             ],
             
             links: [
-                { label: "Contact", url: "mailto:h.sawasaka@rookiesmart.jp" }
+                { label: "お打ち合わせ依頼", url: "https://app.spirinc.com/t/mwF8lqDhdKiI4FsASBYdU/as/3FMH9wfnQAe27xW0_s1Ou/confirm" }
             ]
         };
 
