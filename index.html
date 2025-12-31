@@ -587,6 +587,16 @@
                 </div>
         </section>
 
+        <section class="gallery-section">
+            <div class="section-header">
+                <h2 class="section-title">Own Services</h2>
+                <span id="own-items-counter" class="section-num"></span>
+            </div>
+
+            <div id="own-gallery-grid" class="gallery-grid">
+            </div>
+        </section>
+
         <footer>
             <div class="footer-brand">
                 <div class="footer-logo">ROOKIE SMART JAPAN</div>
@@ -632,13 +642,17 @@
             },
 
             works: [
-                { id: 1, title: "外資SaaS日本法人立ち上げ", category: "Executive", desc: "正社員として参画し、ゼロからの市場開拓を推進。ARR500万円を達成し、日本市場での事業基盤を構築。" },
-                { id: 2, title: "スタートアップ創業", category: "Chief Revenue Officer（CRO）", desc: "共同創業者・CROとして事業立ち上げ。月間50名超の登録者を獲得し、登録制限をかけるまで成長させた。" },
-                { id: 3, title: "中学野球クラブ事業再生", category: "統括責任者", desc: "統括責任者として経営改善に着手。組織再編と集客強化により、年商1,000万円超を実現。" },
-                { id: 4, title: "人材オウンドメディア立ち上げ", category: "開発 / マーケティング", desc: "SEO設計から開発・運用までワンストップで対応。集客基盤としてのメディア構築を実現。" },
-                { id: 5, title: "受託開発", category: "プロダクトマネジメント / PdM", desc: "受託開発企業にて新規事業の推進役として参画。要件定義から仕様設計まで、プロダクト開発を主導。" },
-                { id: 6, title: "オウンドメディア運営", category: "自社サービス", desc: "自社メディアの企画・設計・開発・運用をすべて一人で担当。SEOを軸にした集客基盤を構築。" },
-                { id: 7, title: "DXソフトウェア開発", category: "自社プロダクト", desc: "業務効率化を実現するDXソフトウェアを自社開発。企画からリリースまで一貫して推進中。" },
+                { id: 1, title: "外資SaaS日本法人立ち上げ", category: "Executive", desc: "正社員第一号として参画。ゼロからの市場開拓を推進し、一年でARR 500万円を達成。日本市場での事業基盤を構築。", modalImg: "modal1.jpg" },
+                { id: 2, title: "スタートアップ創業", category: "Chief Revenue Officer（CRO）", desc: "共同創業者・CROとして事業立ち上げ。月間50名超の登録者を獲得し、登録制限をかけるまで成長させた。", modalImg: "modal2.jpg" },
+                { id: 3, title: "中学野球クラブ事業再生", category: "統括責任者", desc: "統括責任者として経営改善に着手。組織再編と集客強化により、年商1,000万円超を実現。", modalImg: "modal3.jpg" },
+                { id: 4, title: "マーケティング支援", category: "開発 / 集客戦略", desc: "人材系スタートアップのマーケティング支援。オウンドメディア開発構想からSEO設計、集客戦略まで一気通貫で対応。", modalImg: "modal4.jpg" },
+                { id: 5, title: "受託開発", category: "プロダクトマネジメント / PdM", desc: "受託開発企業にて新規事業の推進役として参画。要件定義から仕様設計まで、プロダクト開発を主導。", modalImg: "modal5.jpg" },
+                { id: 6, title: "エンタープライズ部門立ち上げ", category: "法人営業", desc: "エンタープライズ事業部の立ち上げに参画。法人向け営業を担当。", modalImg: "modal6.jpg" },
+            ],
+            
+            ownWorks: [
+                { id: 1, title: "オウンドメディア運営", category: "自社サービス", desc: "自社メディアの企画・設計・開発・運用をすべて一人で担当。SEOを軸にした集客基盤を構築。", modalImg: "own_modal1.jpg" },
+                { id: 2, title: "DXソフトウェア開発", category: "自社プロダクト", desc: "業務効率化を実現するDXソフトウェアを自社開発。企画からリリースまで一貫して推進中。" },
             ],
             
             links: [
@@ -718,6 +732,33 @@
                 observer.observe(div);
             });
 
+            // 自社サービスカウンター
+            document.getElementById('own-items-counter').textContent = 
+                `01 / ${String(config.ownWorks.length).padStart(2, '0')}`;
+
+            // 自社サービス要素生成
+            const ownGrid = document.getElementById('own-gallery-grid');
+            config.ownWorks.forEach(work => {
+                const imgPath = `/image/own${work.id}.jpg`;
+
+                const div = document.createElement('div');
+                div.className = 'work-item';
+                
+                div.innerHTML = `
+                    <div class="img-mask">
+                        <img src="${imgPath}" class="work-img" loading="lazy" alt="${work.title}">
+                    </div>
+                    <div class="work-info">
+                        <h3 class="work-title">${work.title}</h3>
+                        <span class="work-cat">${work.category}</span>
+                    </div>
+                `;
+                div.onclick = () => openModal(work, imgPath);
+                ownGrid.appendChild(div);
+
+                observer.observe(div);
+            });
+
             // リンク生成
             const linkList = document.getElementById('links-list');
             config.links.forEach(link => {
@@ -737,7 +778,9 @@
         const body = document.body;
 
         function openModal(work, imgPath) {
-            document.getElementById('modal-img').src = imgPath;
+            // モーダル用画像があればそれを使用、なければサムネイルと同じ
+            const modalImgPath = work.modalImg ? `/image/${work.modalImg}` : imgPath;
+            document.getElementById('modal-img').src = modalImgPath;
             document.getElementById('modal-img').onerror = function() {
                 this.style.display = 'none';
                 this.parentElement.style.backgroundColor = '#222';
