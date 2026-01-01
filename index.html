@@ -451,6 +451,27 @@
             margin-bottom: 3rem;
         }
 
+        .modal-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 3rem;
+        }
+        .site-btn {
+            background: var(--accent-color);
+            border: 1px solid var(--accent-color);
+            color: #000;
+            padding: 1rem 2.5rem;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.85rem;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            transition: 0.3s;
+            text-decoration: none;
+        }
+        .site-btn:hover {
+            background: transparent;
+            color: var(--accent-color);
+        }
         .close-btn {
             background: transparent;
             border: 1px solid var(--text-main);
@@ -460,7 +481,6 @@
             letter-spacing: 0.2em;
             cursor: pointer;
             transition: 0.3s;
-            margin-top: 3rem;
         }
         .close-btn:hover {
             background: var(--accent-color);
@@ -557,7 +577,7 @@
                 
                 <p id="user-bio" class="bio"></p>
                 
-                <p class="pricing">費用　月額固定 | 伴走型</p>
+                <p class="pricing">月額固定 | 伴走型</p>
             </div>
 
             <div class="profile-image-wrapper">
@@ -616,7 +636,10 @@
                 <span id="modal-cat" class="modal-cat">CATEGORY</span>
                 <h2 id="modal-title" class="modal-h2">Title</h2>
                 <p id="modal-desc" style="line-height: 2; color: #aaa;"></p>
-                <button class="close-btn" onclick="closeModal()">CLOSE</button>
+                <div class="modal-buttons">
+                    <a id="modal-link" class="site-btn" href="" target="_blank" rel="noopener noreferrer" style="display: none;">サイトを見る</a>
+                    <button class="close-btn" onclick="closeModal()">CLOSE</button>
+                </div>
             </div>
         </div>
     </div>
@@ -651,7 +674,7 @@
             ],
             
             ownWorks: [
-                { id: 1, title: "オウンドメディア運営", category: "自社サービス", desc: "自社メディアの企画・設計・開発・運用をすべて一人で担当。SEOを軸にした集客基盤を構築。", modalImg: "own_modal1.jpg" },
+                { id: 1, title: "オウンドメディア運営", category: "自社サービス", desc: "自社メディアの企画・設計・開発・運用をすべて一人で担当。SEOを軸にした集客基盤を構築。", modalImg: "own_modal1.jpg", link: "https://baseball.rookiesmart-jp.com/" },
                 { id: 2, title: "DXソフトウェア開発", category: "自社プロダクト", desc: "業務効率化を実現するDXソフトウェアを自社開発。企画からリリースまで一貫して推進中。", modalImg: "own_modal2.jpg" },
             ],
             
@@ -788,6 +811,15 @@
             document.getElementById('modal-title').textContent = work.title;
             document.getElementById('modal-cat').textContent = work.category;
             document.getElementById('modal-desc').textContent = work.desc;
+            
+            // リンクボタンの表示/非表示
+            const linkBtn = document.getElementById('modal-link');
+            if (work.link) {
+                linkBtn.href = work.link;
+                linkBtn.style.display = 'inline-block';
+            } else {
+                linkBtn.style.display = 'none';
+            }
             
             modal.classList.add('active');
             body.style.overflow = 'hidden';
