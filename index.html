@@ -501,9 +501,10 @@
             .line-left, .line-right { display: none; }
             header { 
                 flex-direction: column;
-                padding: 6rem 4vw 2rem;
+                padding: 6rem 4vw 8rem;
                 height: auto;
                 min-height: 100vh;
+                position: relative;
             }
             .header-content {
                 align-items: center;
@@ -519,8 +520,44 @@
                 width: 180px;
                 height: 225px;
             }
+            .scroll-down {
+                position: relative;
+                bottom: auto;
+                left: auto;
+                transform: none;
+                margin-top: 3rem;
+                order: 3;
+            }
             
-            .text-section { padding: 6rem 0 3rem; }
+            /* タブレット・スマホ時はスクロールで表示されたら明るくなる */
+            .work-item.is-visible .work-img {
+                filter: grayscale(0%) brightness(1);
+                transform: scale(1);
+            }
+            
+            /* セクション間の隙間を縮小 */
+            .gallery-section {
+                padding: 4rem 0;
+            }
+            
+            /* カードのタイトルとカテゴリを縦並びに */
+            .work-info {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+            
+            /* セクションヘッダーを縦並びに */
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .text-section { padding: 3rem 0 3rem; }
             .text-inner { padding: 0 1rem; }
             .text-section-title { font-size: 2rem; margin-bottom: 2rem; }
             .text-body { font-size: 1rem; line-height: 2; }
@@ -542,7 +579,7 @@
                 flex-direction: column;
                 align-items: center;
                 gap: 3rem;
-                margin-top: 8rem;
+                margin-top: 4rem;
                 padding-bottom: 3rem;
                 text-align: center;
             }
