@@ -174,8 +174,14 @@
             color: var(--text-main);
         }
 
-        .pricing {
+        .pricing-wrapper {
             margin-top: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        .pricing {
+            margin: 0;
             font-family: 'Montserrat', sans-serif;
             font-size: 0.8rem;
             letter-spacing: 0.15em;
@@ -183,6 +189,12 @@
             border: 1px solid var(--accent-color);
             padding: 0.6rem 1.2rem;
             display: inline-block;
+        }
+        .pricing-note {
+            margin-top: 0.8rem;
+            font-size: 0.75rem;
+            color: var(--text-sub);
+            letter-spacing: 0.05em;
         }
 
         .bio {
@@ -376,6 +388,29 @@
             color: #000;
         }
 
+        .footer-contact {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        .footer-contact-label {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.7rem;
+            letter-spacing: 0.2em;
+            color: var(--text-sub);
+        }
+        .footer-contact-email {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.85rem;
+            letter-spacing: 0.05em;
+            color: var(--text-main);
+            transition: color 0.3s ease;
+        }
+        .footer-contact-email:hover {
+            color: var(--accent-color);
+        }
+
         /* =========================================
            モーダルエリア
            ========================================= */
@@ -557,7 +592,12 @@
                 font-size: 2rem;
             }
             
-            .text-section { padding: 3rem 0 3rem; }
+            /* 費用表示を中央揃え */
+            .pricing-wrapper {
+                align-items: center;
+            }
+            
+            .text-section { padding: 1.5rem 0 3rem; }
             .text-inner { padding: 0 1rem; }
             .text-section-title { font-size: 2rem; margin-bottom: 2rem; }
             .text-body { font-size: 1rem; line-height: 2; }
@@ -614,7 +654,10 @@
                 
                 <p id="user-bio" class="bio"></p>
                 
-                <p class="pricing">月額固定 | 伴走型</p>
+                <div class="pricing-wrapper">
+                    <p class="pricing">月額固定 | 要相談</p>
+                    <span class="pricing-note">法人：事業支援 ／ 個人：IT起業支援</span>
+                </div>
             </div>
 
             <div class="profile-image-wrapper">
@@ -660,6 +703,10 @@
                 <p class="footer-tagline">偏りは、価値になる。</p>
             </div>
             <ul id="links-list" class="social-links"></ul>
+            <div class="footer-contact">
+                <span class="footer-contact-label">CONTACT</span>
+                <a href="mailto:h.sawasaka@rookiesmart.jp" class="footer-contact-email">h.sawasaka@rookiesmart.jp</a>
+            </div>
             <p class="footer-copyright">&copy; <span id="footer-name"></span></p>
         </footer>
     </div>
